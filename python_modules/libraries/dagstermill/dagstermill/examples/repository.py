@@ -16,6 +16,7 @@ from dagster import (
     String,
     composite_solid,
     fs_io_manager,
+    graph,
     pipeline,
     repository,
     resource,
@@ -73,6 +74,18 @@ def test_nb_solid(name, **kwargs):
     )
 
 
+def test_nb_op(name, path, **kwargs):
+    output_defs = kwargs.pop("output_defs", [OutputDefinition(is_required=False)])
+
+    return dagstermill.define_dagstermill_op(
+        name=name,
+        notebook_path=path,
+        output_notebook="notebook",
+        output_defs=output_defs,
+        **kwargs,
+    )
+
+
 default_mode_defs = [
     ModeDefinition(
         resource_defs={
@@ -89,6 +102,23 @@ hello_world = test_nb_solid("hello_world", output_defs=[])
 @pipeline(mode_defs=default_mode_defs)
 def hello_world_pipeline():
     hello_world()
+
+
+hello_world_op = test_nb_op("hello_world_op", nb_test_path("hello_world"), output_defs=[])
+
+
+@graph
+def hello_world_graph():
+    hello_world_op()
+
+
+def build_hello_world_job():
+    return hello_world_graph.to_job(
+        resource_defs={
+            "file_manager": local_file_manager,
+            "io_manager": fs_io_manager,
+        }
+    )
 
 
 hello_world_with_custom_tags_and_description = dagstermill.define_dagstermill_solid(
