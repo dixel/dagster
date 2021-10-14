@@ -5,6 +5,7 @@ from dagster.core.instance import MayHaveInstanceWeakref
 from dagster.core.origin import PipelinePythonOrigin
 from dagster.core.storage.pipeline_run import PipelineRun
 from dagster.core.workspace.workspace import IWorkspace
+from enum import Enum
 
 
 class LaunchRunContext(NamedTuple):
@@ -19,6 +20,22 @@ class LaunchRunContext(NamedTuple):
     @property
     def pipeline_code_origin(self) -> Optional[PipelinePythonOrigin]:
         return self.pipeline_run.pipeline_code_origin
+
+
+class WorkerStatus(Enum):
+    RUNNING = "RUNNING"
+    NOT_FOUND = "NOT_FOUND"
+    FAILED = "FAILED"
+    SUCCESS = "SUCCESS"
+
+
+class CheckRunHealthResult(NamedTuple):
+    """
+    Result of a check_run_health call.
+    """
+
+    status: WorkerStatus
+    message: Optional[str]
 
 
 class RunLauncher(ABC, MayHaveInstanceWeakref):
@@ -61,3 +78,12 @@ class RunLauncher(ABC, MayHaveInstanceWeakref):
 
     def join(self, timeout=30):
         pass
+
+    def supports_check_run_health(self):
+        """
+        Whether the run launcher supports check_run_health.
+        """
+        return False
+
+    def check_run_health(self, run: PipelineRun) -> CheckRunHealthResult:
+        raise NotImplementedError()
