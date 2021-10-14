@@ -40,7 +40,7 @@ We can simply turn a notebook into an op using <PyObject module="dagstermill" ob
 
 ```python file=/legacy/data_science/iris_classify.py
 import dagstermill as dm
-from dagster import fs_io_manager, local_file_manager, job
+from dagster import fs_io_manager, job, local_file_manager
 from dagster.utils import script_relative_path
 
 k_means_iris = dm.define_dagstermill_op("k_means_iris", script_relative_path("iris-kmeans.ipynb"))
@@ -90,7 +90,7 @@ We'll illustrate this process by adding a non-notebook op to our job, which will
 import dagstermill as dm
 from dagster import InputDefinition, fs_io_manager, job
 from dagster.utils import script_relative_path
-from docs_snippets.legacy.data_science.download_file import download_file
+from docs_snippets_crag.legacy.data_science.download_file import download_file
 
 k_means_iris = dm.define_dagstermill_op(
     "k_means_iris",
@@ -206,7 +206,7 @@ For instance, suppose we want to make the number of clusters (the \_k\_ in k-mea
 import dagstermill as dm
 from dagster import Field, InputDefinition, Int, fs_io_manager, job
 from dagster.utils import script_relative_path
-from docs_snippets.legacy.data_science.download_file import download_file
+from docs_snippets_crag.legacy.data_science.download_file import download_file
 
 k_means_iris = dm.define_dagstermill_op(
     "k_means_iris",

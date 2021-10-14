@@ -1,7 +1,7 @@
 import dagstermill as dm
 from dagster import InputDefinition, fs_io_manager, job
 from dagster.utils import script_relative_path
-from docs_snippets.legacy.data_science.download_file import download_file
+from docs_snippets_crag.legacy.data_science.download_file import download_file
 
 k_means_iris = dm.define_dagstermill_op(
     "k_means_iris",
