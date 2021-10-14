@@ -119,13 +119,13 @@ def get_papermill_parameters(step_context, inputs, output_log_path, compute_desc
     if not isinstance(step_context.pipeline, ReconstructablePipeline):
         if compute_descriptor == "solid":
             raise DagstermillError(
-                f"Can't execute a dagstermill solid from a pipeline that is not "
-                "reconstructable. Use the reconstructable() function if executing from python"
+                "Can't execute a dagstermill solid from a pipeline that is not reconstructable. "
+                "Use the reconstructable() function if executing from python"
             )
         else:
             raise DagstermillError(
-                f"Can't execute a dagstermill op from a job that is not "
-                "reconstructable. Use the reconstructable() function if executing from python"
+                "Can't execute a dagstermill op from a job that is not reconstructable. "
+                "Use the reconstructable() function if executing from python"
             )
 
     dm_executable_dict = step_context.pipeline.to_dict()

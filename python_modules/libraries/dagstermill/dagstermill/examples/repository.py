@@ -16,7 +16,7 @@ from dagster import (
     String,
     composite_solid,
     fs_io_manager,
-    graph,
+    job,
     pipeline,
     repository,
     resource,
@@ -107,18 +107,18 @@ def hello_world_pipeline():
 hello_world_op = test_nb_op("hello_world_op", nb_test_path("hello_world"), output_defs=[])
 
 
-@graph
-def hello_world_graph():
-    hello_world_op()
-
-
 def build_hello_world_job():
-    return hello_world_graph.to_job(
+    @job(
         resource_defs={
             "file_manager": local_file_manager,
             "io_manager": fs_io_manager,
+            "output_notebook_io_manager": local_output_notebook_io_manager,
         }
     )
+    def hello_world_job():
+        hello_world_op()
+
+    return hello_world_job
 
 
 hello_world_with_custom_tags_and_description = dagstermill.define_dagstermill_solid(

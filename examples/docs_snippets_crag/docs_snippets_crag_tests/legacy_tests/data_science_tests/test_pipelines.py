@@ -12,16 +12,16 @@ from dagster.utils.yaml_utils import load_yaml_from_path
     "file_path,run_config_path",
     [
         [
-            "iris_pipeline.py",
+            "iris_classify.py",
             None,
         ],
         [
-            "iris_pipeline_2.py",
-            "iris_pipeline_dev.yaml",
+            "iris_classify_2.py",
+            "iris_classify_dev.yaml",
         ],
         [
-            "iris_pipeline_3.py",
-            "iris_pipeline_dev.yaml",
+            "iris_classify_3.py",
+            "iris_classify_dev.yaml",
         ],
     ],
 )
