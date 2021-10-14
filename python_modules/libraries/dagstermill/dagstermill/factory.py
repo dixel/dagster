@@ -8,7 +8,15 @@ from typing import Any, Dict, List, Optional, Sequence, Set, Union
 
 import nbformat
 import papermill
-from dagster import InputDefinition, Output, OutputDefinition, SolidDefinition, check, seven
+from dagster import (
+    InputDefinition,
+    OpDefinition,
+    Output,
+    OutputDefinition,
+    SolidDefinition,
+    check,
+    seven,
+)
 from dagster.core.definitions.event_metadata import EventMetadataEntry
 from dagster.core.definitions.events import AssetMaterialization, Failure, RetryRequested
 from dagster.core.definitions.reconstructable import ReconstructablePipeline
@@ -109,10 +117,16 @@ def get_papermill_parameters(step_context, inputs, output_log_path, compute_desc
     mkdir_p(marshal_dir)
 
     if not isinstance(step_context.pipeline, ReconstructablePipeline):
-        raise DagstermillError(
-            f"Can't execute a dagstermill {compute_descriptor} from a pipeline that is not "
-            "reconstructable. Use the reconstructable() function if executing from python"
-        )
+        if compute_descriptor == "solid":
+            raise DagstermillError(
+                f"Can't execute a dagstermill solid from a pipeline that is not "
+                "reconstructable. Use the reconstructable() function if executing from python"
+            )
+        else:
+            raise DagstermillError(
+                f"Can't execute a dagstermill op from a job that is not "
+                "reconstructable. Use the reconstructable() function if executing from python"
+            )
 
     dm_executable_dict = step_context.pipeline.to_dict()
 
@@ -224,7 +238,7 @@ def _dm_compute(
                 with open(executed_notebook_path, "rb") as fd:
                     yield Output(fd.read(), output_notebook_name)
 
-            elif dagster_factory_name == "define_dagstermill_solid":
+            else:
                 # backcompat
                 executed_notebook_file_handle = None
                 try:
@@ -454,7 +468,7 @@ def define_dagstermill_op(
 
     asset_key_prefix = check.opt_list_param(asset_key_prefix, "asset_key_prefix", of_type=str)
 
-    default_description = f"This solid is backed by the notebook at {notebook_path}"
+    default_description = f"This op is backed by the notebook at {notebook_path}"
     description = check.opt_str_param(description, "description", default=default_description)
 
     user_tags = validate_tags(tags)

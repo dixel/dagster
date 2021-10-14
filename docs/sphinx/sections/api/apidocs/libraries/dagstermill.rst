@@ -5,6 +5,8 @@ Dagstermill
 
 .. autofunction:: define_dagstermill_solid
 
+.. autofunction:: define_dagstermill_op
+
 .. autofunction:: get_context
 
 .. autofunction:: yield_event

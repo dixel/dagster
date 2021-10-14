@@ -80,7 +80,7 @@ def test_nb_op(name, path, **kwargs):
     return dagstermill.define_dagstermill_op(
         name=name,
         notebook_path=path,
-        output_notebook="notebook",
+        output_notebook_name="notebook",
         output_defs=output_defs,
         **kwargs,
     )
