@@ -251,7 +251,7 @@ export const RunMetadataProvider: React.FC<IRunMetadataProviderProps> = ({logs, 
 };
 
 export const RUN_METADATA_PROVIDER_MESSAGE_FRAGMENT = gql`
-  fragment RunMetadataProviderMessageFragment on PipelineRunEvent {
+  fragment RunMetadataProviderMessageFragment on DagsterRunEvent {
     __typename
     ... on MessageEvent {
       message
