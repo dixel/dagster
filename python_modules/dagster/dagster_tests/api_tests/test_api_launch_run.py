@@ -75,7 +75,7 @@ def test_launch_run_with_unloadable_pipeline_grpc():
                     ("ENGINE_EVENT", "Started process for run"),
                     ("ENGINE_EVENT", "Could not load pipeline definition"),
                     (
-                        "RUN_FAILURE",
+                        "PIPELINE_FAILURE",
                         "This run has been marked as failed from outside the execution context",
                     ),
                     ("ENGINE_EVENT", "Process for run exited"),

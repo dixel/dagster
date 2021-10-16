@@ -34,11 +34,11 @@ import {
   LaunchPipelineReexecution,
   LaunchPipelineReexecutionVariables,
 } from './types/LaunchPipelineReexecution';
-import {RunFragment} from './types/RunFragment';
 import {
   RunDagsterRunEventFragment,
   RunDagsterRunEventFragment_ExecutionStepFailureEvent,
 } from './types/RunDagsterRunEventFragment';
+import {RunFragment} from './types/RunFragment';
 import {useQueryPersistedLogFilter} from './useQueryPersistedLogFilter';
 
 interface RunProps {

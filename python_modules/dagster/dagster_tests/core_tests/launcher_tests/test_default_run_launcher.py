@@ -377,7 +377,7 @@ def test_terminated_run(get_workspace, run_config):  # pylint: disable=redefined
                 _check_event_log_contains(
                     run_logs,
                     [
-                        ("RUN_CANCELING", "Sending run termination request."),
+                        ("PIPELINE_CANCELING", "Sending run termination request."),
                         (
                             "ENGINE_EVENT",
                             "Multiprocess executor: received termination signal - forwarding to active child process",
@@ -388,7 +388,7 @@ def test_terminated_run(get_workspace, run_config):  # pylint: disable=redefined
                         ),
                         ("STEP_FAILURE", 'Execution of step "sleepy_solid" failed.'),
                         (
-                            "RUN_CANCELED",
+                            "PIPELINE_CANCELED",
                             'Execution of run for "sleepy_pipeline" canceled.',
                         ),
                         ("ENGINE_EVENT", "Process for run exited"),
@@ -398,10 +398,10 @@ def test_terminated_run(get_workspace, run_config):  # pylint: disable=redefined
                 _check_event_log_contains(
                     run_logs,
                     [
-                        ("RUN_CANCELING", "Sending run termination request."),
+                        ("PIPELINE_CANCELING", "Sending run termination request."),
                         ("STEP_FAILURE", 'Execution of step "sleepy_solid" failed.'),
                         (
-                            "RUN_CANCELED",
+                            "PIPELINE_CANCELED",
                             'Execution of run for "sleepy_pipeline" canceled.',
                         ),
                         ("ENGINE_EVENT", "Process for run exited"),
@@ -563,7 +563,7 @@ def test_engine_events(get_workspace, run_config):  # pylint: disable=redefined-
             assert finished_pipeline_run.status == PipelineRunStatus.SUCCESS
 
             poll_for_event(
-                instance, run_id, event_type="ENGINE_EVENT", message="Process for pipeline exited"
+                instance, run_id, event_type="ENGINE_EVENT", message="Process for run exited"
             )
             event_records = instance.all_logs(run_id)
 

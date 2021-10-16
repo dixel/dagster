@@ -244,13 +244,12 @@ def test_terminate_launched_docker_run():
 
             run_logs = instance.all_logs(run_id)
 
-            print(run_logs)
             _check_event_log_contains(
                 run_logs,
                 [
-                    ("RUN_CANCELING", "Sending run termination request"),
+                    ("PIPELINE_CANCELING", "Sending run termination request"),
                     ("STEP_FAILURE", 'Execution of step "hanging_solid" failed.'),
-                    ("RUN_CANCELED", 'Execution of run for "hanging_pipeline" canceled.'),
+                    ("PIPELINE_CANCELED", 'Execution of run for "hanging_pipeline" canceled.'),
                     ("ENGINE_EVENT", "Process for run exited"),
                 ],
             )
