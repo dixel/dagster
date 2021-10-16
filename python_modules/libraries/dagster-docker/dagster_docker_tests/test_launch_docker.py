@@ -244,6 +244,7 @@ def test_terminate_launched_docker_run():
 
             run_logs = instance.all_logs(run_id)
 
+            print(run_logs)
             _check_event_log_contains(
                 run_logs,
                 [
