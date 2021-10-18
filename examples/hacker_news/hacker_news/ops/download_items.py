@@ -47,7 +47,7 @@ def download_items(context, id_range: Tuple[int, int]) -> Output:
     non_none_rows = [row for row in rows if row is not None]
 
     return Output(
-        DataFrame(non_none_rows).drop_duplicates(subset=["id"]),
+        DataFrame(non_none_rows, columns=ACTION_FIELD_NAMES).drop_duplicates(subset=["id"]),
         "items",
         metadata={"Non-empty items": len(non_none_rows), "Empty items": rows.count(None)},
     )
