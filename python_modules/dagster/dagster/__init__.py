@@ -100,6 +100,7 @@ from dagster.core.definitions import (
     run_failure_sensor,
     run_status_sensor,
     schedule,
+    schedule_from_partitioned_job,
     schedule_from_partitions,
     sensor,
     solid,
@@ -427,6 +428,7 @@ __all__ = [
     "EventRecordsFilter",
     "RunShardedEventsCursor",
     # partitions and schedules
+    "schedule_from_partitioned_job",
     "schedule_from_partitions",
     "dynamic_partitioned_config",
     "static_partitioned_config",

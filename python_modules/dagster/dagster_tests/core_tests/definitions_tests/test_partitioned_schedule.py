@@ -2,7 +2,7 @@ from datetime import datetime
 
 import pendulum
 from dagster import build_schedule_context, graph, repository, solid
-from dagster.core.definitions.partitioned_schedule import schedule_from_partitions
+from dagster.core.definitions.partitioned_schedule import schedule_from_partitioned_job
 from dagster.core.definitions.time_window_partitions import (
     TimeWindow,
     daily_partitioned_config,
@@ -29,7 +29,7 @@ def job_for_partitions(
     def my_graph():
         my_solid()
 
-    return schedule_from_partitions(
+    return schedule_from_partitioned_job(
         my_graph.to_job(config=partitioned_config),
         minute_of_hour=minute_of_hour,
         hour_of_day=hour_of_day,
@@ -38,7 +38,7 @@ def job_for_partitions(
     )
 
 
-def test_daily_schedule_from_partitions():
+def test_daily_schedule_from_partitioned_job():
     @daily_partitioned_config(start_date="2021-05-05")
     def my_partitioned_config(start, end):
         return {"start": str(start), "end": str(end)}
@@ -60,7 +60,7 @@ def test_daily_schedule_from_partitions():
         return [my_schedule]
 
 
-def test_hourly_schedule_from_partitions():
+def test_hourly_schedule_from_partitioned_job():
     @hourly_partitioned_config(start_date=datetime(2021, 5, 5))
     def my_partitioned_config(start, end):
         return {"start": str(start), "end": str(end)}
@@ -82,7 +82,7 @@ def test_hourly_schedule_from_partitions():
         return [my_schedule]
 
 
-def test_weekly_schedule_from_partitions():
+def test_weekly_schedule_from_partitioned_job():
     @weekly_partitioned_config(start_date="2021-05-05")
     def my_partitioned_config(start, end):
         return {"start": str(start), "end": str(end)}
@@ -106,7 +106,7 @@ def test_weekly_schedule_from_partitions():
         return [my_schedule]
 
 
-def test_monthly_schedule_from_partitions():
+def test_monthly_schedule_from_partitioned_job():
     @monthly_partitioned_config(start_date="2021-05-05")
     def my_partitioned_config(start, end):
         return {"start": str(start), "end": str(end)}

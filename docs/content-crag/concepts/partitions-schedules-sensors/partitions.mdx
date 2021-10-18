@@ -16,7 +16,7 @@ description: Dagster "Partitioned Jobs" enable launching backfills, where each p
 | <PyObject object="monthly_partitioned_config" decorator /> | Decorator for constructing partitioned config where each partition is a month.                      |
 | <PyObject object="static_partitioned_config" decorator />  | Decorator for constructing partitioned config for a static set of partition keys.                   |
 | <PyObject object="dynamic_partitioned_config" decorator /> | Decorator for constructing partitioned config for a set of partition keys that can grow over time.  |
-| <PyObject object="schedule_from_partitions" />             | A function that constructs a schedule whose interval matches the partitioning of a partitioned job. |
+| <PyObject object="schedule_from_partitioned_job" />        | A function that constructs a schedule whose interval matches the partitioning of a partitioned job. |
 
 ## Overview
 
@@ -124,9 +124,9 @@ It's common that, when you have a partitioned job, you want to run it on a sched
 The <PyObject object="schedule_from_partitions"/> function allows you to construct a schedule whose interval matches the spacing of partitions in your job.
 
 ```python file=/concepts/partitions_schedules_sensors/schedule_from_partitions.py startafter=start_marker endbefore=end_marker
-from dagster import schedule_from_partitions
+from dagster import schedule_from_partitioned_job
 
-do_stuff_partitioned_schedule = schedule_from_partitions(do_stuff_partitioned)
+do_stuff_partitioned_schedule = schedule_from_partitioned_job(do_stuff_partitioned)
 ```
 
 ## Testing
@@ -171,19 +171,19 @@ In the "Run Matrix", each column corresponds to one of the partitions in the job
 -->
 
 <Image
-alt="Partitions Tab"
-src="/images/concepts/partitions-schedules-sensors/partitions-page.png"
-width={3808}
-height={2414}
+  alt="Partitions Tab"
+  src="/images/concepts/partitions-schedules-sensors/partitions-page.png"
+  width={3808}
+  height={2414}
 />
 
 You can click on individual boxes to see the history of runs for that step and partition.
 
 <Image
-alt="Partition Step Modal"
-src="/images/concepts/partitions-schedules-sensors/partitions-step-modal.png"
-width={3808}
-height={2414}
+  alt="Partition Step Modal"
+  src="/images/concepts/partitions-schedules-sensors/partitions-step-modal.png"
+  width={3808}
+  height={2414}
 />
 
 ### Launching Partitioned Runs from the Playground
@@ -193,8 +193,8 @@ You can view and use partitions in the Dagit Playground tab for a job. In the to
 In the screenshot below, we select the `2020-05-01` partition, and we can see that the run config for the partition has been populated in the editor.
 
 <Image
-alt="Partitions in Dagit Playground"
-src="/images/concepts/partitions-schedules-sensors/partitions-playground.png"
-width={3808}
-height={2414}
+  alt="Partitions in Dagit Playground"
+  src="/images/concepts/partitions-schedules-sensors/partitions-playground.png"
+  width={3808}
+  height={2414}
 />
